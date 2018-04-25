@@ -1,4 +1,4 @@
-import dataProviders.loginDataProvider;
+import dataProviders.LoginDataProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +14,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class loginSuccessTest {
+public class LoginSuccessTest {
 
     private static final By USERNAME_INPUT = By.id("Username");
     private static final By PASSWORD_INPUT = By.name("Password");
@@ -44,7 +45,7 @@ public class loginSuccessTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(loginDataProvider.class)
+    @ArgumentsSource(LoginDataProvider.class)
     public void loginTest(String username, String password, boolean rememberMe) throws InterruptedException {
         String expectedSkype = "csi.alexandersavenok";
 
@@ -63,10 +64,11 @@ public class loginSuccessTest {
         WebElement isSoftSolutionsLink = driver.findElement(ISSOFT_SOLUTIONS_LINK);
         WebElement wexHealthCloudLink = driver.findElement(WEX_HEALTH_CLOUD_LINK);
         WebElement individualImage = driver.findElement(INDIVIDUAL_IMAGE);
-        assertEquals(expectedSkype, skypeDataImageAttribute, String.format("Expected skype value: %s\nActual skype value: %s", expectedSkype, skypeDataImageAttribute));
-        assertTrue(isSoftSolutionsLink.isDisplayed(), "IsSoft Solutions link does not displayed");
-        assertTrue(wexHealthCloudLink.isDisplayed(), "Wex Health Cloud link does not displayed");
-        assertTrue(individualImage.isDisplayed(), "Individual image does not displayed");
+        assertAll("Verify elements exist",
+                () -> assertTrue(isSoftSolutionsLink.isDisplayed(), "IsSoft Solutions link does not displayed"),
+                () -> assertTrue(wexHealthCloudLink.isDisplayed(), "Wex Health Cloud link does not displayed"),
+                () -> assertTrue(individualImage.isDisplayed(), "Individual image does not displayed"),
+                () -> assertEquals(expectedSkype, skypeDataImageAttribute, String.format("Expected skype value: %s\nActual skype value: %s", expectedSkype, skypeDataImageAttribute)));
     }
 
     @Test
@@ -90,7 +92,7 @@ public class loginSuccessTest {
 
         //d) Go to office tab, wait for "Search by office" input to appear (wait 15 seconds, polling frequence - 2,7 seconds).
         driver.findElement(OFFICE_TAB).click();
-        new FluentWait(driver).withTimeout(15, TimeUnit.SECONDS).pollingEvery((long) 2.7, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(driver.findElement(SEARCH_BY_OFFICE_INPUT)));
+        waiter.withTimeout(15, TimeUnit.SECONDS).pollingEvery((long) 2.7, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(driver.findElement(SEARCH_BY_OFFICE_INPUT)));
     }
 
     @AfterEach

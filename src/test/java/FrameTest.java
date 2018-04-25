@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class frameTest {
+public class FrameTest {
 
     private static final String FRAME = "mce_0_ifr";
     private static final String CUSTOM_TEXT = "Hello world!";
