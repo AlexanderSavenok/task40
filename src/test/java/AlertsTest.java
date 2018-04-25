@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class alertsTest {
+public class AlertsTest {
 
-    private static final By CLICK_FOR_JS_ALERT = By.cssSelector("ul > li:first-child > button");
-    private static final By CLICK_FOR_JS_CONFIRM = By.cssSelector("ul > li:nth-child(2) > button");
-    private static final By CLICK_FOR_JS_PROMPT = By.cssSelector("ul > li:last-child > button");
+    private static final By CLICK_FOR_JS_ALERT = By.cssSelector("button[onclick='jsAlert()']");
+    private static final By CLICK_FOR_JS_CONFIRM = By.cssSelector("button[onclick='jsConfirm()']");
+    private static final By CLICK_FOR_JS_PROMPT = By.cssSelector("button[onclick='jsPrompt()']");
     private static final By RESULT_LABEL = By.id("result");
 
     private WebDriver driver;
